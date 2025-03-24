@@ -8,13 +8,13 @@ const Main = () => {
 
   
   const buttons = [
-    { id: 1, top: "71%", left: "11%", width: "99px", height: "121px", path: "/1" },
-    { id: 2, top: "51%", left: "39%", width: "80px", height: "187px", path: "/2" },
-    { id: 3, top: "76%", left: "51%", width: "153px", height: "50px", path: "/3" },
-    { id: 4, top: "22%", left: "28%", width: "101px", height: "150px", path: "/S4" },
-    { id: 5, top: "43%", left: "14%", width: "82x", height: "45px", path: "/5" },
+    { id: 1, top: "71%", left: "11.5%", width: "99px", height: "121px", path: "/1" },
+    { id: 2, top: "51%", left: "39%", width: "69px", height: "187px", path: "/2" },
+    { id: 3, top: "76%", left: "51.5%", width: "153px", height: "50px", path: "/3" },
+    { id: 4, top: "22%", left: "28.25%", width: "103px", height: "150px", path: "/4" },
+    { id: 5, top: "43%", left: "14.25%", width: "79px", height: "45px", path: "/5" },
     { id: 6, top: "13%", left: "49%", width: "65px", height: "239px", path: "/6" },
-    { id: 7, top: "22%", left: "60%", width: "177px", height: "83px", path: "/7" },
+    { id: 7, top: "22%", left: "60%", width: "157px", height: "83px", path: "/7" },
    
   ];
 
