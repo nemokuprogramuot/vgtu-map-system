@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Use Routes instead of Switch
 import Main from "./Main";
+import ErrorPage from "./ErrorPage";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
        
         <Routes> 
           <Route path="/" element={<Main />} /> 
-          <Route path="*" element={<Main />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
         
       </Router>
