@@ -8,6 +8,7 @@ import S3 from './S3';
 import S4 from './S4';
 import S5 from './S5';
 import S6 from './S6';
+import Navbar from "./Navbar";
 
 
 function App() {
