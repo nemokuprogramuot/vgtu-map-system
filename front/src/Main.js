@@ -21,7 +21,6 @@ const Main = () => {
 
   return (
     <div style={styles.content}>
-        <h1>VilniusTech</h1>
       <h2>Patobulintas, lengviau suprantamas</h2>
       <div style={styles.imageContainer}>
         <img
