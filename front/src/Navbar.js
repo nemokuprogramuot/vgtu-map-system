@@ -1,12 +1,21 @@
 import React from "react";
-const Navbar = () => {
+import { useNavigate, useLocation } from "react-router-dom"; 
 
+const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation(); 
+
+  const handleBackClick = () => {
+    navigate(-1); 
+  };
+
+ 
   return (
     <nav style={styles.navbar}>
       <h1 style={styles.title}>Vilnius Tech Žemėlapis</h1>
-      
         <button
-        style={styles.backButton}
+          onClick={handleBackClick}
+          style={styles.backButton}
         >
           Atgal
         </button>
