@@ -9,16 +9,19 @@ const Navbar = () => {
     navigate(-1); 
   };
 
- 
+  const showBackButton = location.pathname !== "/"; 
+
   return (
     <nav style={styles.navbar}>
       <h1 style={styles.title}>Vilnius Tech Žemėlapis</h1>
+      {showBackButton && (
         <button
           onClick={handleBackClick}
           style={styles.backButton}
         >
           Atgal
         </button>
+      )}
     </nav>
   );
 };
