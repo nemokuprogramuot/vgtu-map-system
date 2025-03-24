@@ -47,16 +47,15 @@ const Page1 = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.header}>S1 Centriniai rūmai</h1>
-      <h3 style={styles.subheader}>SRC</h3>
+       <h1 style={styles.header}>S3 Mokomasis korpusas</h1>
+       <h3 style={styles.subheader}>SRK-I</h3>
       <img
         src= {pradine}
         alt="Map of S1 Centriniai rūmai"
         style={styles.image}
       />
       <p style={styles.description}>
-        <strong>Kaip patekti:</strong> Nuo centrinės aikštės (žr. žemėlapyje) pasukti
-        kairėn. Eiti prie stiklinio pastato.
+      <strong>Kaip patekti:</strong> Nuo centrinės aikštės (žr. žemėlapyje) pasukti dešinėn
       </p>
       <p style={styles.description}>
         <strong>Navigacija:</strong>
