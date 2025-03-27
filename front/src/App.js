@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Use Routes instead of Switch
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { LoadScript } from "@react-google-maps/api";
 import Main from "./Main";
 import ErrorPage from "./ErrorPage";
 import S1 from './S1';
@@ -13,12 +14,11 @@ import Navbar from "./Navbar";
 
 function App() {
   return (
-    <div >
+    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
       <Router>
-      <Navbar />
-
-        <Routes> 
-          <Route path="/" element={<Main />} /> 
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Main />} />
           <Route path="/S1" element={<S1 />} />
           <Route path="/S2" element={<S2 />} />
           <Route path="/S3" element={<S3 />} />
@@ -26,12 +26,10 @@ function App() {
           <Route path="/S5" element={<S5 />} />
           <Route path="/S6" element={<S6 />} />
           <Route path="/S7" element={<S6 />} />
-
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-        
       </Router>
-    </div>
+    </LoadScript>
   );
 }
 
