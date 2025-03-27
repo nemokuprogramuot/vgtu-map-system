@@ -5,7 +5,7 @@ import mainPhoto from "./photos/mainphoto.png";
 const Main = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
   
-
+//net nzn
   
   const buttons = [
     { id: 1, top: "71%", left: "11.5%", width: "99px", height: "121px", path: "/S1" },
