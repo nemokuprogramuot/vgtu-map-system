@@ -1,6 +1,8 @@
 import React from "react";
 import zemelapis from "./photos/placeholder1.jpg"
 import pradine from "./photos/placeholder2.jpg"
+import PannellumViewer from "./components/PannellumViewer";
+import testas from "./photos/test1.jpg"
 
 const Page1 = () => {
 
@@ -42,6 +44,13 @@ const Page1 = () => {
       alignItems: "center", 
       gap: "20px", 
     },
+    viewerContainer: {
+      width: "50%", 
+      marginBottom: "20px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      overflow: "hidden"
+    },
    
   };
 
@@ -54,6 +63,25 @@ const Page1 = () => {
         alt="Map of S1 Centriniai rūmai"
         style={styles.image}
       />
+      <div style={styles.viewerContainer}>
+        <PannellumViewer
+          imagePath={testas}
+          hotspots={[
+            {
+              pitch: 10,
+              yaw: 120,
+              text: "Go here",
+              onClick: () => alert("Hotspot clicked!"),
+            },
+            {
+              pitch: -5,
+              yaw: -90,
+              text: "Another point",
+              onClick: () => alert("Another hotspot clicked!"),
+            },
+          ]}
+        />
+      </div>
       <p style={styles.description}>
         <strong>Kaip patekti:</strong> Nuo centrinės aikštės (žr. žemėlapyje) pasukti
         kairėn. Eiti prie stiklinio pastato.
