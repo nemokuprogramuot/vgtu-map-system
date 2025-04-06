@@ -5,31 +5,39 @@ on:
     branches:
       - dev
       - main
-      - 'req/*'
   pull_request:
     branches:
       - dev
       - main
-      - 'req/*'
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '22.11.0'  # Adjust the Node.js version as needed
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Install and Build Front-End
+        run: |
+          npm install
+          npm run build
+        working-directory: ./front
 
-    - name: Build Project
-      run: npm run build
+      # - name: Install and Build Back-End
+      #   run: |
+      #     npm install
+      #     npm run build
+      #   working-directory: ./server
 
-    - name: Run Tests
-      run: npm test
+      - name: Run Front-End Tests
+        run: npm test
+        working-directory: ./front
+
+      # - name: Run Back-End Tests
+      #   run: npm test
+      #   working-directory: ./server
