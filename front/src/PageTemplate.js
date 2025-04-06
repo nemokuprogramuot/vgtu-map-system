@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { GoogleMap, Marker } from "@react-google-maps/api";
-import placeholderMap from "./photos/placeholder1.jpg";
-import placeholderPageImage from "./photos/placeholder2.jpg";
+import "./App.css";
 
 const pageConfig = {
   S1: {
@@ -43,16 +42,36 @@ const containerStyle = {
   width: "60%",
   height: "800px",
 };
-
-const centerCoordinates = {
+const defaultCenterCoordinates = {
   lat: 54.722313,
   lng: 25.337344,
 };
+
+const predeterminedLocations = [
+    {
+      id: "loc1",
+      name: "Automobilių stovėjimo aikštelė",
+      coordinates: { lat: 54.720406, lng: 25.33752},
+    },
+    {
+      id: "loc2",
+      name: "Saulėtekio alėjos stotelė",
+      coordinates: { lat: 54.724101, lng: 25.334603 },
+    },
+    {
+      id: "loc3",
+      name: "Bendrabučiai",
+      coordinates: { lat: 54.723438, lng: 25.341579},
+    },
+  ];
 
 const PageTemplate = () => {
   const { pageId } = useParams();
   const config = pageConfig[pageId];
   const [map, setMap] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
+  const [selectedStart, setSelectedStart] = useState(null);
+
   const onLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
   }, []);
@@ -65,81 +84,112 @@ const PageTemplate = () => {
     if (map) {
       const timeout = setTimeout(() => {
         window.google.maps.event.trigger(map, "resize");
-        map.setCenter(centerCoordinates);
+        const center = selectedStart
+          ? selectedStart.coordinates
+          : userLocation || defaultCenterCoordinates;
+        map.setCenter(center);
       }, 300);
       return () => clearTimeout(timeout);
     }
-  }, [map]);
+  }, [map, userLocation, selectedStart]);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error("Error watching position: ", error);
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 0,
+          timeout: 5000,
+        }
+      );
+      return () => navigator.geolocation.clearWatch(watchId);
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, []);
+
+  const handleStartLocationSelect = (location) => {
+    setSelectedStart(location);
+  };
+
+  const currentCenter = selectedStart
+  ? selectedStart.coordinates
+  : userLocation || defaultCenterCoordinates;
 
   if (!config) {
     return <div>Page not found</div>;
   }
 
-  const styles = {
-    container: {
-      margin: "20px",
-      padding: "10px",
-      border: "1px solid #ddd",
-      borderRadius: "8px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      textAlign: "center",
-    },
-    image: {
-      maxWidth: "50%",
-      marginBottom: "10px",
-    },
-    header: {
-      fontSize: "24px",
-      fontWeight: "bold",
-    },
-    subheader: {
-      fontSize: "18px",
-      marginTop: "10px",
-    },
-    description: {
-      fontSize: "16px",
-      marginTop: "10px",
-    },
-    photo: {
-      maxWidth: "100%",
-      margin: "20px 0",
-    },
-    photoContainer: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: "20px",
-    },
-  };
-
   return (
-    <div style={styles.container}>
-      <h1 style={styles.header}>{config.header}</h1>
-      <h3 style={styles.subheader}>{config.subheader}</h3>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={centerCoordinates}
-        zoom={17}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        {markers.map((marker, index) => (
-          <Marker
-            key={index}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            label={{
-              text: marker.id,
-              fontSize: "15px",
-              fontWeight: "bold",
-              color: "black",
-            }}
-          />
-        ))}
-      </GoogleMap>
-    </div>
+    <div className="page-container">
+    <h1 className="page-header">{config.header}</h1>
+    {/* Only show the buttons if the user location is not available */}
+    {!userLocation && (
+      <>
+        <div className="header-buttons">Pasirinkite pradinę poziciją.</div>
+        <div className="buttons-container">
+          {predeterminedLocations.map((loc) => (
+            <button
+              key={loc.id}
+              className="start-location-button"
+              onClick={() => handleStartLocationSelect(loc)}
+            >
+              {loc.name}
+            </button>
+          ))}
+        </div>
+      </>
+    )}
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={currentCenter}
+      zoom={17}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+    >
+      {markers.map((marker, index) => (
+        <Marker
+          key={index}
+          position={{ lat: marker.lat, lng: marker.lng }}
+          label={{
+            text: marker.id,
+            fontSize: "15px",
+            fontWeight: "bold",
+            color: "black",
+          }}
+        />
+      ))}
+      {selectedStart && (
+        <Marker
+          position={selectedStart.coordinates}
+          label={{
+            text: "Pradžios taškas",
+            fontSize: "15px",
+            fontWeight: "bold",
+            color: "black",
+          }}
+        />
+      )}
+      {userLocation && !selectedStart && (
+        <Marker
+          position={userLocation}
+          label={{
+            text: "You are here",
+            fontSize: "15px",
+            fontWeight: "bold",
+            color: "blue",
+          }}
+        />
+      )}
+    </GoogleMap>
+  </div>
   );
 };
 
