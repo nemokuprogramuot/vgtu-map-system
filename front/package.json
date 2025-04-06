@@ -43,5 +43,8 @@
     "moduleNameMapper": {
       "^react-router-dom$": "<rootDir>/__mocks__/react-router-dom.js"
     }
-  }
+  },
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(@testing-library)/)"
+  ]
 }
