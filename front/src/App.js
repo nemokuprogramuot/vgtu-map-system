@@ -5,6 +5,7 @@ import Main from "./Main";
 import ErrorPage from "./ErrorPage";
 import PageTemplate from "./PageTemplate";
 import Navbar from "./Navbar";
+import Comment from "./Comment";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Main />} />
           {/* Dynamic route for pages */}
           <Route path="/:pageId" element={<PageTemplate />} />
+          <Route path = "/comment" element = {<Comment/>}/>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
