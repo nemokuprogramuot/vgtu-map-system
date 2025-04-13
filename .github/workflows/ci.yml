@@ -32,8 +32,8 @@ jobs:
 
       - name: Install and Build Back-End
         run: |
-          npm install
-          npm start
+           npm install
+           npm run build
         working-directory: ./server
 
       - name: Run Front-End Tests
@@ -41,8 +41,6 @@ jobs:
         working-directory: ./front
 
       - name: Run Back-End Tests
-        run: |
-          npm install
-          npm test
+        run: npm test
         working-directory: ./server
         
