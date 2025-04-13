@@ -5,10 +5,12 @@ on:
     branches:
       - dev
       - main
+      -send-comments
   pull_request:
     branches:
       - dev
       - main
+      -send-comments
 
 jobs:
   build-and-test:
@@ -28,16 +30,16 @@ jobs:
           npm run build
         working-directory: ./front
 
-      # - name: Install and Build Back-End
-      #   run: |
-      #     npm install
-      #     npm run build
-      #   working-directory: ./server
+      - name: Install and Build Back-End
+        run: |
+          npm install
+          npm start
+        working-directory: ./server
 
       - name: Run Front-End Tests
         run: npm test
         working-directory: ./front
 
-      # - name: Run Back-End Tests
-      #   run: npm test
-      #   working-directory: ./server
+      - name: Run Back-End Tests
+        run: npm test
+        working-directory: ./server
