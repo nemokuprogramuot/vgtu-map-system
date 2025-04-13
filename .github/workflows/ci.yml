@@ -6,11 +6,13 @@ on:
       - dev
       - main
       - send-comments
+      - 360image
   pull_request:
     branches:
       - dev
       - main
       - send-comments
+      - 360image
 
 jobs:
   build-and-test:
