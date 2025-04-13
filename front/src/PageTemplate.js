@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import "./App.css";
+import PannellumViewer from "./components/PannellumViewer";
+import logo from './photos/test3.jpg';
 
 const pageConfig = {
   S1: {
@@ -189,6 +191,26 @@ const PageTemplate = () => {
         />
       )}
     </GoogleMap>
+    <div style={{ width: '60%'}}>
+      <h2>Fakulteto įėjimlo 360 laipsnių vaizdas</h2>
+      <PannellumViewer
+        imagePath={logo} // Change to your image path
+        hotspots={[
+          {
+            pitch: 10,
+            yaw: 120,
+            text: "Go here",
+            onClick: () => alert("Hotspot clicked!"),
+          },
+          {
+            pitch: -5,
+            yaw: -90,
+            text: "Another point",
+            onClick: () => alert("Another hotspot clicked!"),
+          },
+        ]}
+      />
+    </div>
   </div>
   );
 };
