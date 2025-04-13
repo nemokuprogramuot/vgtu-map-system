@@ -40,7 +40,7 @@ jobs:
         working-directory: ./front
 
       - name: Run Back-End Tests
-       run: |
+        run: |
           npm install
           chmod +x ./node_modules/.bin/jest
           npx jest
