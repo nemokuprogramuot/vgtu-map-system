@@ -5,12 +5,12 @@ on:
     branches:
       - dev
       - main
-      -send-comments
+      - send-comments
   pull_request:
     branches:
       - dev
       - main
-      -send-comments
+      - send-comments
 
 jobs:
   build-and-test:
