@@ -41,5 +41,7 @@ jobs:
         working-directory: ./front
 
       - name: Run Back-End Tests
-        run: npm test
+        run: |
+        npm install
+        npx jest
         working-directory: ./server
