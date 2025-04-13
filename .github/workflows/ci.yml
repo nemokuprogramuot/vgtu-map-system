@@ -42,6 +42,7 @@ jobs:
 
       - name: Run Back-End Tests
         run: |
-        npm install
-        npx jest
+          npm install
+          npx jest
         working-directory: ./server
+        
