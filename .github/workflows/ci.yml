@@ -6,11 +6,13 @@ on:
       - dev
       - main
       - send-comments
+      - System-Load
   pull_request:
     branches:
       - dev
       - main
       - send-comments
+      - System-Load
 
 jobs:
   build-and-test:
