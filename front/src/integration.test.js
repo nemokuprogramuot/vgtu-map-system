@@ -59,5 +59,17 @@ jest.mock('@react-google-maps/api', () => {
       const markerLabel = await waitFor(() => screen.getByText(/Pradžios taškas/i));
       expect(markerLabel).toBeInTheDocument();
     });
+
+    test('grįžimas į praeitą puslapį trunka <= 1 sekundę', async () => {
+      const { container } = renderWithRouter(<PageTemplate />);
+      const button = screen.getByRole('button', { name: /Automobilių stovėjimo aikštelė/i });
+      fireEvent.click(button);
+      const startTime = Date.now();
+      window.history.back();
+      await waitFor(() => screen.getByText(/S1 Centriniai rūmai/i));
+      const elapsedTime = Date.now() - startTime;
+      expect(elapsedTime).toBeLessThanOrEqual(1000);
+    });
+    
   });
   
