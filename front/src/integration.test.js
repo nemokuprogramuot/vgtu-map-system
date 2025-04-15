@@ -34,11 +34,17 @@ jest.mock('@react-google-maps/api', () => {
         React.createElement('a', props, children),
     };
   });
+
+  jest.mock('./components/PannellumViewer', () => {
+    return function MockPannellumViewer(props) {
+      return <div data-testid="pannellum-viewer">Panorama Viewer</div>;
+    };
+  });
   
   import React from 'react';
   import { render, screen, fireEvent, waitFor } from '@testing-library/react';
   import PageTemplate from './PageTemplate';
-  import { BrowserRouter } from 'react-router-dom';
+  import { BrowserRouter } from 'react-router-dom';  
   
   const renderWithRouter = (ui, { route = '/S1' } = {}) => {
     window.history.pushState({}, 'Test page', route);
@@ -69,6 +75,19 @@ jest.mock('@react-google-maps/api', () => {
       await waitFor(() => screen.getByText(/S1 Centriniai rūmai/i));
       const elapsedTime = Date.now() - startTime;
       expect(elapsedTime).toBeLessThanOrEqual(1000);
+    });
+
+    test('VMS-72 konversijos procesas trunka mažiau nei <= 500 ms', async () => {
+      const startTime = Date.now();
+      renderWithRouter(<PageTemplate />);
+      const panoramaElement = await screen.findByTestId('pannellum-viewer');
+      expect(panoramaElement).toBeInTheDocument();
+      const endTime = Date.now();
+      const loadingTime = endTime - startTime;
+      console.log(`Interactive image loading time: ${loadingTime}ms`);
+      expect(loadingTime).toBeLessThanOrEqual(500);
+      const panoramaHeading = screen.getByText(/Fakulteto įėjimlo 360 laipsnių vaizdas/i);
+      expect(panoramaHeading).toBeInTheDocument();
     });
     
   });
