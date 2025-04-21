@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Data = require('./models/data') 
+const Visit = require('./models/visit')
+const AllVisits = require('./models/allVisits')
 require('dotenv').config();
 
 
@@ -60,5 +62,27 @@ app.post("/add-comment", (req,res) => {
     res.status(500).send("Internal server error"); 
    }
 
+})
+
+app.post("/visit", async(req,res) => {
+    
+    data = sanitizeInput(req.body.building)
+    const visitEntry = new Visit({
+        building: data, 
+
+    });
+    await visitEntry.save();
+    console.log("Building visit recorded in Visit table");
+
+    let visits = await AllVisits.findOne({ path: data });
+
+    if (visits) {
+        visits.count += 1;
+      } 
+      
+      await visits.save();
+      console.log("Visit recorded in Visits table");
+
+         
 })
 module.exports = app;
