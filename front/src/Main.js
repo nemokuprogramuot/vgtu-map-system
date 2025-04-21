@@ -16,6 +16,27 @@ const Main = () => {
     { id: 7, top: "22%", left: "60%", width: "157px", height: "83px", path: "/S7" },
    
   ];
+  const handleSubmit = (building) => {
+    fetch("/visit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ building }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Err");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data sent successfully:", data);
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
+  };
 
 
   return (
@@ -30,6 +51,7 @@ const Main = () => {
         {buttons.map((button) => (
           <Link
             key={button.id}
+            onClick={() => handleSubmit(button.path)}
             to={button.path}
             style={{
               ...styles.button1,
