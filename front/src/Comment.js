@@ -1,4 +1,5 @@
 import React from 'react';
+import "./App.css";
 
 export default function Comment() {
   const handleSubmit = (e) => {
@@ -25,18 +26,18 @@ export default function Comment() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title:</label>
-        <input type="text" id="title" name="title" required />
+    <form className="comment-form" onSubmit={handleSubmit}>
+      <label htmlFor="title">Pavadinimas:</label>
+      <input className="comment-input" type="text" id="title" name="title" required />
 
-        <label htmlFor="description">Description:</label>
-        <input type="text" id="description" name="description" required />
+      <label htmlFor="description">Aprašymas:</label>
+      <textarea className="comment-input" type="text" id="description" name="description" required />
 
-        <label htmlFor="email">Email:</label>
-        <input type="text" id="email" name="email" />
+      <label htmlFor="email">El paštas:</label>
+      <input className="comment-input" type="text" id="email" name="email" />
 
-        <button type="submit">Submit Comment</button>
-      </form>
-    </div>
+      <button className="comment-button" type="submit">Siųsti komentarą</button>
+    </form>
+  </div>
   );
 }
