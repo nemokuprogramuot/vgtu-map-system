@@ -56,4 +56,63 @@
     transform: scale(1.05);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   }
+
+  form {
+    max-width: 600px; /* Slightly wider for better form appearance */
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    box-sizing: border-box;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .comment-input {
+    width: 100%;
+    padding: 12px; /* Increased padding for better input feel */
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  .comment-input:focus {
+    border-color: #1E90FF; /* Highlight input when focused */
+    outline: none; /* Remove default outline */
+  }
+  
+  .comment-input[type="textarea"] {
+    height: 150px; /* Height of the textarea */
+    resize: vertical; /* Allow resizing vertically */
+  }
+  
+  button {
+    background-color: #1E90FF;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  }
+  
+  button:hover {
+    background-color: #1c86ee;
+    transform: scale(1.05); /* Small scale effect on hover */
+  }
+  
+  button:active {
+    transform: scale(1); /* Reset scale when button is clicked */
+  }
   
