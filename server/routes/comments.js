@@ -73,7 +73,6 @@ router.get('/comments', authenticateToken, (req, res) => {
   Data.find({})
     .then(comments => {
       res.status(200).json(comments);
-      console.log("Fetched comments:", comments);
     })
     .catch(err => {
       console.error(err);

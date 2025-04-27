@@ -1,7 +1,7 @@
 import React from 'react';
 import "./App.css";
 
-export default function Comment() {
+export default function Comment({ t }) { // RECEIVE t as prop
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -13,9 +13,7 @@ export default function Comment() {
       method: 'POST',
       body: data
     })
-    .then(response => {
-      return response.text();
-    })
+    .then(response => response.text())
     .then(message => {
       alert(message); 
     })
@@ -26,18 +24,18 @@ export default function Comment() {
 
   return (
     <div>
-    <form className="comment-form" onSubmit={handleSubmit}>
-      <label htmlFor="title">Pavadinimas:</label>
-      <input className="comment-input" type="text" id="title" name="title" required />
+      <form className="comment-form" onSubmit={handleSubmit}>
+        <label htmlFor="title">{t('form.title')}</label>
+        <input className="comment-input" type="text" id="title" name="title" required />
 
-      <label htmlFor="description">Aprašymas:</label>
-      <textarea className="comment-input" type="text" id="description" name="description" required />
+        <label htmlFor="description">{t('form.description')}</label>
+        <textarea className="comment-input" id="description" name="description" required />
 
-      <label htmlFor="email">El paštas:</label>
-      <input className="comment-input" type="text" id="email" name="email" />
+        <label htmlFor="email">{t('form.email')}</label>
+        <input className="comment-input" type="text" id="email" name="email" />
 
-      <button className="comment-button" type="submit">Siųsti komentarą</button>
-    </form>
-  </div>
+        <button className="comment-button" type="submit">{t('form.submit')}</button>
+      </form>
+    </div>
   );
 }

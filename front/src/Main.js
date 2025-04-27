@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import mainPhoto from "./photos/mainphoto.png";
 
-
-const Main = () => {
+const Main = ({ t }) => { // ✅ Add t() as prop
   const [hoveredButton, setHoveredButton] = useState(null);
 
   const buttons = [
@@ -29,11 +28,11 @@ const Main = () => {
 
   return (
     <div style={styles.content}>
-      <h2>Patobulintas, lengviau suprantamas</h2>
+      <h2>{t('main.subtitle')}</h2> {/* ✅ Translate heading */}
       <div style={styles.imageContainer}>
         <img
           src={mainPhoto}
-          alt="Vilnius Tech Map"
+          alt={t('main.imageAlt')} // ✅ Translate alt text
           style={styles.image}
         />
         {buttons.map((button) => (
@@ -59,6 +58,7 @@ const Main = () => {
   );
 };
 
+
 const styles = {
   content: {
     flex: 1,
@@ -83,8 +83,6 @@ const styles = {
     cursor: "pointer",
     transition: "background-color 0.3s, border-color 0.3s",
   },
-
-  
 };
 
 export default Main;
