@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { isAuthenticated } from "./utils/auth";
 
-const Navbar = () => {
+const Navbar = ({ language, setLanguage, t }) => { 
   const navigate = useNavigate();
   const location = useLocation();
   const [auth, setAuth] = useState(isAuthenticated());
@@ -27,39 +27,46 @@ const Navbar = () => {
       <div style={styles.left}>
         {showBackButton && (
           <button onClick={() => navigate(-1)} style={styles.backButton}>
-            Atgal
+            {t('navbar.back')}
           </button>
         )}
         {showLoginButton && (
           <Link to="/login" style={{ textDecoration: "none" }}>
-            <button style={styles.loginButton}>Prisijungti</button>
+            <button style={styles.loginButton}>{t('navbar.login')}</button>
           </Link>
         )}
         {showCommentsButton && (
           <Link to="/comments" style={{ textDecoration: "none" }}>
-            <button style={styles.loginButton}>Komentarai</button>
+            <button style={styles.loginButton}>{t('navbar.comments')}</button>
           </Link>
         )}
         {showLogoutButton && (
           <button onClick={handleLogout} style={styles.logoutButton}>
-            Atsijungti
+            {t('navbar.logout')}
           </button>
         )}
       </div>
 
       <div style={styles.center}>
-        <h1 style={styles.title}>Vilnius Tech Žemėlapis</h1>
-      </div>
+  <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+    <h1 style={styles.title}>{t('navbar.title')}</h1>
+  </Link>
+</div>
 
       <div style={styles.right}>
         <Link to="/comment" style={{ textDecoration: "none" }}>
-          <button style={styles.commentButton}>Susisiekite su mumis</button>
+          <button style={styles.commentButton}>{t('navbar.contact')}</button>
         </Link>
+
+        {/* Language switcher */}
+        <select value={language} onChange={(e) => setLanguage(e.target.value)} style={{ marginLeft: "10px" }}>
+          <option value="lt">LT</option>
+          <option value="en">EN</option>
+        </select>
       </div>
     </nav>
   );
 };
-
 const styles = {
   navbar: {
     backgroundColor: "#1E90FF",
