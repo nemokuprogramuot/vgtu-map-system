@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { GoogleMap, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker, DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import "./App.css";
 import PannellumViewer from "./components/PannellumViewer";
 import logo from './photos/test3.jpg';
@@ -41,7 +41,7 @@ const markers = [
 ];
 
 const containerStyle = {
-  width: "60%",
+  width: "90%",
   height: "800px",
 };
 const defaultCenterCoordinates = {
@@ -73,6 +73,9 @@ const PageTemplate = () => {
   const [map, setMap] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [selectedStart, setSelectedStart] = useState(null);
+  const [directions, setDirections] = useState(null);
+  const [destination, setDestination] = useState(null);
+
 
   const onLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
@@ -116,7 +119,36 @@ const PageTemplate = () => {
       console.error("Geolocation is not supported by this browser.");
     }
   }, []);
-
+  useEffect(() => {
+    const targetMarker = markers.find((marker) => marker.id === pageId || marker.id.startsWith(pageId));
+    if (targetMarker) {
+      setDestination({ lat: targetMarker.lat, lng: targetMarker.lng });
+    }
+  }, [pageId]);
+  
+  useEffect(() => {
+    if ((selectedStart || userLocation) && destination) {
+      const origin = selectedStart ? selectedStart.coordinates : userLocation;
+      
+      const directionsService = new window.google.maps.DirectionsService();
+      
+      directionsService.route(
+        {
+          origin,
+          destination,
+          travelMode: window.google.maps.TravelMode.WALKING,
+        },
+        (result, status) => {
+          if (status === window.google.maps.DirectionsStatus.OK) {
+            setDirections(result);
+          } else {
+            console.error(`error fetching directions ${result}`);
+          }
+        }
+      );
+    }
+  }, [selectedStart, userLocation, destination]);
+  
   const handleStartLocationSelect = (location) => {
     setSelectedStart(location);
   };
@@ -190,6 +222,20 @@ const PageTemplate = () => {
           }}
         />
       )}
+      {directions && (
+  <DirectionsRenderer
+    directions={directions}
+    options={{
+      suppressMarkers: true, // Optional: don't add default markers
+      polylineOptions: {
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.7,
+        strokeWeight: 5,
+      },
+    }}
+  />
+)}
+
     </GoogleMap>
     <div style={{ width: '60%'}}>
       <h2>Fakulteto įėjimlo 360 laipsnių vaizdas</h2>
