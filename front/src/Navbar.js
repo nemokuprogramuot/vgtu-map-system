@@ -53,6 +53,7 @@ const Navbar = ({ language, setLanguage, t }) => {
   </Link>
 </div>
 
+
       <div style={styles.right}>
         <Link to="/comment" style={{ textDecoration: "none" }}>
           <button style={styles.commentButton}>{t('navbar.contact')}</button>
