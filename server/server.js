@@ -4,12 +4,15 @@ const Data = require('./models/data')
 const Visit = require('./models/visit')
 const AllVisits = require('./models/allVisits')
 require('dotenv').config();
+const authRoutes = require('./routes/auth');
+const commentRoutes = require('./routes/comments');
 
 
 const app = express()
+app.use(express.json()); // To parse JSON bodies
+
+
 const dbURI = process.env.NODE_ENV === 'test' ? process.env.TEST_DB_URI : process.env.dbURI;
-
-
 //connect to mongodb
 if(process.env.NODE_ENV !==  'test'){
     
@@ -22,6 +25,10 @@ const cors = require("cors"); // laikinai
 app.use(cors());
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json()); 
+app.use(authRoutes);
+app.use(commentRoutes);
+app.use(express.urlencoded({ extended: true }));
+
 
 function sanitizeInput(str) {
     if (typeof str !== 'string') return '';

@@ -1,22 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { isAuthenticated } from "./utils/auth";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [auth, setAuth] = useState(isAuthenticated());
 
-  const handleBackClick = () => {
-    navigate(-1);
+  useEffect(() => {
+    setAuth(isAuthenticated());
+  }, [location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setAuth(false);
+    navigate('/');
   };
 
   const showBackButton = location.pathname !== "/";
+  const showLoginButton = location.pathname === "/" && !auth;
+  const showCommentsButton = location.pathname === "/" && auth;
+  const showLogoutButton = location.pathname === "/comments" && auth;
 
   return (
     <nav style={styles.navbar}>
       <div style={styles.left}>
         {showBackButton && (
-          <button onClick={handleBackClick} style={styles.backButton}>
+          <button onClick={() => navigate(-1)} style={styles.backButton}>
             Atgal
+          </button>
+        )}
+        {showLoginButton && (
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <button style={styles.loginButton}>Prisijungti</button>
+          </Link>
+        )}
+        {showCommentsButton && (
+          <Link to="/comments" style={{ textDecoration: "none" }}>
+            <button style={styles.loginButton}>Komentarai</button>
+          </Link>
+        )}
+        {showLogoutButton && (
+          <button onClick={handleLogout} style={styles.logoutButton}>
+            Atsijungti
           </button>
         )}
       </div>
@@ -27,9 +53,7 @@ const Navbar = () => {
 
       <div style={styles.right}>
         <Link to="/comment" style={{ textDecoration: "none" }}>
-        <button onClick={handleBackClick} style={styles.commentButton}>
-          Susisiekite su mumis
-        </button>
+          <button style={styles.commentButton}>Susisiekite su mumis</button>
         </Link>
       </div>
     </nav>
@@ -48,6 +72,7 @@ const styles = {
     flex: 1,
     display: "flex",
     justifyContent: "flex-start",
+    gap: "10px",
   },
   center: {
     flex: 1,
@@ -65,6 +90,22 @@ const styles = {
   },
   backButton: {
     backgroundColor: "blue",
+    color: "white",
+    border: "none",
+    padding: "8px 16px",
+    cursor: "pointer",
+    borderRadius: "5px",
+  },
+  loginButton: {
+    backgroundColor: "white",
+    color: "blue",
+    border: "none",
+    padding: "8px 16px",
+    cursor: "pointer",
+    borderRadius: "5px",
+  },
+  logoutButton: {
+    backgroundColor: "red",
     color: "white",
     border: "none",
     padding: "8px 16px",
