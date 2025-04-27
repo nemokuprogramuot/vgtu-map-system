@@ -116,3 +116,17 @@
     transform: scale(1); /* Reset scale when button is clicked */
   }
   
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  @media (max-width: 1024px) {
+    .container {
+      width: 95%;
+    }
+  }
+
+ 
+
+  

@@ -4,6 +4,7 @@ import { GoogleMap, Marker, DirectionsService, DirectionsRenderer } from "@react
 import "./App.css";
 import PannellumViewer from "./components/PannellumViewer";
 import logo from './photos/test3.jpg';
+import "./App.css";
 
 const pageConfig = {
   S1: {
@@ -237,7 +238,7 @@ const PageTemplate = () => {
 )}
 
     </GoogleMap>
-    <div style={{ width: '60%'}}>
+    <div className="container">
       <h2>Fakulteto įėjimlo 360 laipsnių vaizdas</h2>
       <PannellumViewer
         imagePath={logo} // Change to your image path

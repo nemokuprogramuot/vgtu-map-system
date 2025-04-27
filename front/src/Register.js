@@ -25,7 +25,7 @@ function Register() {
     const { success, message } = await registerUser(formData);
     if (success) {
       alert("Registered successfully!");
-      navigate("/login");
+      navigate("/comments");
     } else {
       alert(message);
     }
