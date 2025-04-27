@@ -41,7 +41,7 @@ const markers = [
 ];
 
 const containerStyle = {
-  width: "60%",
+  width: "90%",
   height: "800px",
 };
 const defaultCenterCoordinates = {
