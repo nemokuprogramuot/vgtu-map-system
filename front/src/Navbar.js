@@ -48,8 +48,11 @@ const Navbar = () => {
       </div>
 
       <div style={styles.center}>
+      <Link to="/" style={{ textDecoration: "none", color: "white" }}>
         <h1 style={styles.title}>Vilnius Tech Žemėlapis</h1>
-      </div>
+      </Link>
+    </div>
+
 
       <div style={styles.right}>
         <Link to="/comment" style={{ textDecoration: "none" }}>
