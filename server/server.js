@@ -6,11 +6,11 @@ const AllVisits = require('./models/allVisits')
 require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const commentRoutes = require('./routes/comments');
-
+const gptRoutes = require('./routes/gpt');
 
 const app = express()
 app.use(express.json()); // To parse JSON bodies
-
+app.use(gptRoutes);
 
 const dbURI = process.env.NODE_ENV === 'test' ? process.env.TEST_DB_URI : process.env.dbURI;
 //connect to mongodb
