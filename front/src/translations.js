@@ -51,6 +51,12 @@ export const translations = {
         hotspot2: "Another point",
         hotspotClick: "Hotspot clicked!",
         hotspot2Click: "Another hotspot clicked!"
+      },
+      AI: {
+        title: "Ask AI for help!",
+        button: "Ask AI",
+        buttonLoading: "AI is thinking...",
+        response: 'AI response',
       }
     },
     lt: {
@@ -105,6 +111,12 @@ export const translations = {
         hotspot2: "Kitas taškas",
         hotspotClick: "Karštasis taškas paspaustas!",
         hotspot2Click: "Kitas karštasis taškas paspaustas!"
+      },
+      AI: {
+        title: "Paprašyk pagalbos dirbtinio intelekto!",
+        button: "DI pagalba",
+        buttonLoading: "DI galvoja...",
+        response: 'DI atsakymas',
       }
 
     }
