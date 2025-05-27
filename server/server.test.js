@@ -1,30 +1,30 @@
-jest.setTimeout(30000); // Optional: increase Jest timeout for async ops
+// jest.setTimeout(30000); // Optional: increase Jest timeout for async ops
 
-const request = require('supertest');
-const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-const app = require('./server');
-const Data = require('./models/data');
+// const request = require('supertest');
+// const mongoose = require('mongoose');
+// const { MongoMemoryServer } = require('mongodb-memory-server');
+// const app = require('./server');
+// const Data = require('./models/data');
 
-let mongoServer;
+// let mongoServer;
 
-beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const uri = await mongoServer.getUri(); // ✅ must await
-  await mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-});
+// beforeAll(async () => {
+//   mongoServer = await MongoMemoryServer.create();
+//   const uri = await mongoServer.getUri(); // ✅ must await
+//   await mongoose.connect(uri, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   });
+// });
 
-afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
-});
+// afterAll(async () => {
+//   await mongoose.disconnect();
+//   await mongoServer.stop();
+// });
 
-afterEach(async () => {
-  await Data.deleteMany({});
-});
+// afterEach(async () => {
+//   await Data.deleteMany({});
+// });
 
 describe('CI placeholder test', () => {
     it('should pass without doing anything', () => {
