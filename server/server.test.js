@@ -1,25 +1,30 @@
+jest.setTimeout(30000); // Optional: increase Jest timeout for async ops
+
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const app = require('./server'); // Import the Express app
-const Data = require('./models/data'); // Import the Data model
-const express = require('express')
+const app = require('./server');
+const Data = require('./models/data');
 
 let mongoServer;
 
-beforeAll (async () => {
-    mongoServer = await MongoMemoryServer.create();
-    const uri = mongoServer.getUri();
-    await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-}
-);
+beforeAll(async () => {
+  mongoServer = await MongoMemoryServer.create();
+  const uri = await mongoServer.getUri(); // ✅ must await
+  await mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+});
+
 afterAll(async () => {
-    await mongoose.disconnect();
-    await mongoServer.stop();
-}); 
+  await mongoose.disconnect();
+  await mongoServer.stop();
+});
+
 afterEach(async () => {
-    await Data.deleteMany({}); // Clear the database after each test
-} );
+  await Data.deleteMany({});
+});
 
 describe('POST /add-comment', () => {
    it("should save comment to database", async () => {
