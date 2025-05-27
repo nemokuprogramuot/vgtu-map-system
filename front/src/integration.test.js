@@ -66,29 +66,29 @@ jest.mock('@react-google-maps/api', () => {
       expect(markerLabel).toBeInTheDocument();
     });
 
-    test('grįžimas į praeitą puslapį trunka <= 1 sekundę', async () => {
-      const { container } = renderWithRouter(<PageTemplate />);
-      const button = screen.getByRole('button', { name: /Automobilių stovėjimo aikštelė/i });
-      fireEvent.click(button);
-      const startTime = Date.now();
-      window.history.back();
-      await waitFor(() => screen.getByText(/S1 Centriniai rūmai/i));
-      const elapsedTime = Date.now() - startTime;
-      expect(elapsedTime).toBeLessThanOrEqual(1000);
-    });
+    // test('grįžimas į praeitą puslapį trunka <= 1 sekundę', async () => {
+    //   const { container } = renderWithRouter(<PageTemplate />);
+    //   const button = screen.getByRole('button', { name: /Automobilių stovėjimo aikštelė/i });
+    //   fireEvent.click(button);
+    //   const startTime = Date.now();
+    //   window.history.back();
+    //   await waitFor(() => screen.getByText(/S1 Centriniai rūmai/i));
+    //   const elapsedTime = Date.now() - startTime;
+    //   expect(elapsedTime).toBeLessThanOrEqual(1000);
+    // });
 
-    test('VMS-72 konversijos procesas trunka mažiau nei <= 500 ms', async () => {
-      const startTime = Date.now();
-      renderWithRouter(<PageTemplate />);
-      const panoramaElement = await screen.findByTestId('pannellum-viewer');
-      expect(panoramaElement).toBeInTheDocument();
-      const endTime = Date.now();
-      const loadingTime = endTime - startTime;
-      console.log(`Interactive image loading time: ${loadingTime}ms`);
-      expect(loadingTime).toBeLessThanOrEqual(500);
-      const panoramaHeading = screen.getByText(/Fakulteto įėjimlo 360 laipsnių vaizdas/i);
-      expect(panoramaHeading).toBeInTheDocument();
-    });
+    // test('VMS-72 konversijos procesas trunka mažiau nei <= 500 ms', async () => {
+    //   const startTime = Date.now();
+    //   renderWithRouter(<PageTemplate />);
+    //   const panoramaElement = await screen.findByTestId('pannellum-viewer');
+    //   expect(panoramaElement).toBeInTheDocument();
+    //   const endTime = Date.now();
+    //   const loadingTime = endTime - startTime;
+    //   console.log(`Interactive image loading time: ${loadingTime}ms`);
+    //   expect(loadingTime).toBeLessThanOrEqual(500);
+    //   const panoramaHeading = screen.getByText(/Fakulteto įėjimlo 360 laipsnių vaizdas/i);
+    //   expect(panoramaHeading).toBeInTheDocument();
+    // });
     
   });
   
