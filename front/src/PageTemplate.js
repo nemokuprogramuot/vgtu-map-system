@@ -1,19 +1,161 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
 import "./App.css";
 import PannellumViewer from "./components/PannellumViewer";
-import logo from './photos/test3.jpg';
+import photoS1 from './photos/S1.jpg';
+import photoS2 from './photos/S2.jpg';
+import photoS3 from './photos/S3.jpg';
+import photoS4S5 from './photos/S4S5.jpg';
+import photoS6 from './photos/S6.jpg';
+import photoS7 from './photos/S7.jpg';
 
 const pageConfig = {
-  S1: { header: "pageTemplate.s1" },
-  S2: { header: "pageTemplate.s2" },
-  S3: { header: "pageTemplate.s3" },
-  S4: { header: "pageTemplate.s4" },
-  S5: { header: "pageTemplate.s5" },
-  S6: { header: "pageTemplate.s6" },
-  S7: { header: "pageTemplate.s7" },
+  S1: {
+    header: "pageTemplate.s1",
+    imagePath: photoS1,
+    hotspots: [
+      {
+        pitch: 3,
+        yaw: 65,
+        text: "S3 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S3",
+      },
+      {
+        pitch: 2,
+        yaw: 3,
+        text: "S1 įėjimas",
+      },
+      {
+        pitch: 5,
+        yaw: 29,
+        text: "S2 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S2",
+      },
+    ],
+  },
+  S2: {
+    header: "pageTemplate.s2",
+    imagePath: photoS2,
+    hotspots: [
+      {
+        pitch: 2,
+        yaw: 0,
+        text: "S2 įėjimas",
+      },
+      {
+        pitch: 3,
+        yaw: -105,
+        text: "S4/S5 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S4",
+      },
+      {
+        pitch: 0,
+        yaw: 62,
+        text: "S3 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S3",
+      },
+      {
+        pitch: 0,
+        yaw: 94,
+        text: "S1 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S1",
+      },
+      {
+        pitch: 4,
+        yaw: -66,
+        text: "S6 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S6",
+      },
+    ],
+  },
+  S3: {
+    header: "pageTemplate.s3",
+    imagePath: photoS3,
+    hotspots: [
+      {
+        pitch: 8,
+        yaw: 2,
+        text: "S3 įėjimas",
+      },
+      {
+        pitch: 1,
+        yaw: -83,
+        text: "S1 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S1",
+      },
+      {
+        pitch: 4,
+        yaw: -52,
+        text: "S2 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S2",
+      },
+    ],
+  },
+  S4: {
+    header: "pageTemplate.s4",
+    imagePath: photoS4S5,
+    hotspots: [
+      {
+        pitch: 2,
+        yaw: 0,
+        text: "S4/S5 įėjimas",
+      },
+      {
+        pitch: -1,
+        yaw: 60,
+        text: "S2 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S2",
+      },
+    ],
+  },
+  S5: {
+    header: "pageTemplate.s5",
+    imagePath: photoS4S5,
+    hotspots: [
+      {
+        pitch: 2,
+        yaw: 0,
+        text: "S4/S5 įėjimas",
+      },
+      {
+        pitch: -1,
+        yaw: 60,
+        text: "S2 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S2",
+      },
+    ],
+  },
+  S6: {
+    header: "pageTemplate.s6",
+    imagePath: photoS6,
+    hotspots: [
+      {
+        pitch: 5,
+        yaw: 19,
+        text: "S6 įėjimas",
+      },
+      {
+        pitch: -3,
+        yaw: 111,
+        text: "S2 įėjimas (Paspausti, kad priartinti)",
+        targetPageId: "S2",
+      },
+    ],
+  },
+  S7: {
+    header: "pageTemplate.s7",
+    imagePath: photoS7,
+    hotspots: [
+      {
+        pitch: 2,
+        yaw: 4,
+        text: "S6 galinis įėjimas. Pro jį galima patekti į S7 korpusą.",
+      },
+    ],
+  },
 };
+
 
 const markers = [
   { id: "S1", lat: 54.72274383397544, lng: 25.33764722315543 },
@@ -48,6 +190,7 @@ const PageTemplate = ({ t }) => {
   const [selectedStart, setSelectedStart] = useState(null);
   const [directions, setDirections] = useState(null);
   const [destination, setDestination] = useState(null);
+  const navigate = useNavigate();
 
   const onLoad = useCallback((mapInstance) => setMap(mapInstance), []);
   const onUnmount = useCallback(() => setMap(null), []);
@@ -197,21 +340,13 @@ const PageTemplate = ({ t }) => {
       <div className="container">
         <h2>{t('pageTemplate.facultyView')}</h2>
         <PannellumViewer
-          imagePath={logo}
-          hotspots={[
-            {
-              pitch: 10,
-              yaw: 120,
-              text: t('pageTemplate.hotspot1'),
-              onClick: () => alert(t('pageTemplate.hotspotClick')),
-            },
-            {
-              pitch: -5,
-              yaw: -90,
-              text: t('pageTemplate.hotspot2'),
-              onClick: () => alert(t('pageTemplate.hotspot2Click')),
-            },
-          ]}
+          imagePath={config.imagePath}
+          hotspots={config.hotspots.map(h => ({
+            ...h,
+            onClick: h.targetPageId
+              ? () => navigate(`/${h.targetPageId}`)
+              : undefined,
+          }))}
         />
       </div>
     </div>
